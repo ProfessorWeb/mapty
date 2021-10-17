@@ -60,6 +60,8 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const workout__title = document.querySelector('.workouts');
+const clearInput = document.querySelector('.clear-all');
 
 class App {
   #mapZoomLevel = 13;
@@ -69,8 +71,21 @@ class App {
   constructor() {
     this._getPosition;
     this.getWorkout();
+
+    // Create new Workout submit - When we Click Enter
     form.addEventListener('submit', this._newWorkout.bind(this));
 
+    // Edit Workout
+    // workout__title.addEventListener('dblclick', function (e) {
+    //   if (e.target.classList.contains('workout__title')) {
+    //     prompt();
+    //   }
+    // });
+
+    // Clear All WorkOut list when we click on button Clear
+    clearInput.addEventListener('click', this.clearWorkout);
+
+    // Toggle - when we Select Running show me Cadence input when we Select Cycling show me Elev Gain
     inputType.addEventListener('change', this._toggleElevationField);
 
     containerWorkouts.addEventListener('click', this.getPositon.bind(this));
@@ -199,7 +214,7 @@ class App {
   }
 
   renderList(workout) {
-    let html = ` 
+    let html = `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
     <h2 class="workout__title">${workout.description}</h2>
     <div class="workout__details">
@@ -282,8 +297,11 @@ class App {
     // this.#workout.forEach(work => this.renderList(work));
   }
 
+  editWorkout() {}
+
   clearWorkout() {
     localStorage.removeItem('save-workout');
+    location.reload();
   }
 }
 
